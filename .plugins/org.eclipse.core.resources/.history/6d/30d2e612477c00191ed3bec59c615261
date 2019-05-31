@@ -1,0 +1,47 @@
+'''
+Created on May 20, 2019
+
+@author: sceaj
+'''
+
+from datetime import timedelta
+
+class DataState(object):
+    '''
+    classdocs
+    '''
+    names = [
+            'Time',
+            'GPS Time',
+            'GPS Date',
+            'Longitude',
+            'Latitude',
+            'Altitude',
+            'X',
+            'Y',
+            'KPH',
+            'Heading,
+            'Lap',
+            'RPM',
+            'Gear',
+            'Throttle',
+            'Brake',
+            'Clutch',
+            'PSM'
+            'Accuracy']
+
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        self.state_time = timedelta(days = 0, seconds = 0, milliseconds = 0)
+        self.last_state_time = timedelta(days = 0, seconds = 0, milliseconds = 0)
+        self.state = dict()
+        
+    def set_data_time(self, time):
+        self.state_time = time
+        if self.state_time > self.last_state_time:
+            print "Time has incremented"
+        
+    def set_data_item(self, key, value):
+        self.state['key'] = value

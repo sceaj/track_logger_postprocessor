@@ -1,0 +1,34 @@
+'''
+Created on May 20, 2019
+
+@author: sceaj
+'''
+from converter.data_state import DataState
+from util.enum import Enum
+
+class AccelerometerParser(object):
+    '''
+    classdocs
+    '''
+    Fields = Enum(['Mnemonic', 'Time', 'LogitudinalGs', 'LateralGs', 'VerticalGs'])
+
+    x_zero = 505
+    y_zero = 511
+    z_zero = 510
+    
+    scale = 100.0
+    
+    def __init__(self, state):
+        '''
+        Constructor
+        '''
+        self.state = state
+
+    @staticmethod
+    def get_adjusted_value(raw_value, zero_value):
+        return float(raw_value - zero_value) / AccelerometerParser.scale
+            
+    def parser(self, sentence):
+        field_data = sentence.split(',')
+        extractor.extractData(field_data, self.state)
+        self.state.set_data_item(DataState.names[DataState.names.Time], CanFrameParser.can_time(field_data))

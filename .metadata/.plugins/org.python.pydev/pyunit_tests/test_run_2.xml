@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="0" failures="1" finished="true" name="Test Run: 2" tests="3" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="fail" test="Test.test_get_data_names" time="">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py", line 54, in test_get_data_names
+    self.assertTrue('Coolant Temperature' in names)
+AssertionError: False is not true
+]]>
+        </stderr>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="ok" test="Test.test_set_data_item" time="0.00">
+        <stdout/>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="ok" test="Test.test_set_data_item_multi" time="0.00">
+        <stdout/>
+        <stderr/>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter data_state_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

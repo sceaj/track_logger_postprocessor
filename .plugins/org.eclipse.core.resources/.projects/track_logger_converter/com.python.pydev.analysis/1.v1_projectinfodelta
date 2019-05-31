@@ -1,0 +1,9 @@
+INSTUPtests.parsers.nmea_parser_test
+/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/nmea_parser_test.py
+INFOS:&&1|1|2|0|3|11|7&&3|4|2|1|3|13|5&&3|5|2|1|3|14|5&&2|6|2|1|3|16|9
+test_parser=5
+tests.parsers.nmea_parser_test=2
+NmeaParserTest=1
+test_rmc_1=6
+test_state=4
+/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/nmea_parser_test.py=3

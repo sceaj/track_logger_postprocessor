@@ -1,0 +1,17 @@
+'''
+Created on May 20, 2019
+
+@author: sceaj
+'''
+
+class Parser(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        

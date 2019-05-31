@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="0" failures="1" finished="true" name="Test Run: 56" tests="11" total_time="Finished in: 0.01 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame242_1" time="0.00">
+        <stdout>
+            <![CDATA[Clutch: 0
+RPM: 0
+ECU_Throttle: 0
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame242_2" time="0.00">
+        <stdout>
+            <![CDATA[Clutch: 8
+RPM: 5170
+ECU_Throttle: 76
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame245" time="0.00">
+        <stdout>
+            <![CDATA[Coolant: 96
+Brake: 2
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame246" time="0.00">
+        <stdout>
+            <![CDATA[Gear: 3
+Throttle: 88
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame24A" time="0.00">
+        <stdout>
+            <![CDATA[Left Front KPH: 41
+Right Front KPH: 42
+Left Rear KPH: 41
+Right Rear KPH: 41
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame441" time="0.00">
+        <stdout>
+            <![CDATA[Oil Temperature: 89
+Oil Pressure: 325
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame44B" time="0.00">
+        <stdout>
+            <![CDATA[Brake Pressure: 43
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testParserFrame242" time="0.00">
+        <stdout>
+            <![CDATA[Clutch: 8
+RPM: 5170
+ECU_Throttle: 76
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testParserFrame245" time="0.00">
+        <stdout>
+            <![CDATA[Coolant: 98
+Brake: 0
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testParserFrame246" time="0.00">
+        <stdout>
+            <![CDATA[Gear: 4
+Throttle: 98
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="fail" test="CanFrameParserTest.testParserFrame24A" time="">
+        <stdout>
+            <![CDATA[Gear: 3
+Throttle: 12
+]]>
+        </stdout>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py", line 106, in testParserFrame24A
+    self.assertEqual(80, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.LF_KPH)), 'LF wheel speed was not parsed correctly.')
+AssertionError: LF wheel speed was not parsed correctly.
+]]>
+        </stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter can_frame_parser_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

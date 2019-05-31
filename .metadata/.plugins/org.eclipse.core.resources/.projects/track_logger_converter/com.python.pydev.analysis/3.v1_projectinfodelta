@@ -1,0 +1,16 @@
+INSTUPparsers.nmea_parser
+/Users/jeff/Documents/workspaces/dme/track_logger_converter/parsers/nmea_parser.py
+INFOS:&&1|1|2|0|3|9|7&&3|4|2|1|3|11|5&&2|5|2|1|3|13|9&&1|6|2|0|3|38|7&&3|7|2|6|3|43|5&&2|8|2|6|3|46|9&&2|9|2|6|3|53|9&&2|10|2|6|3|59|9&&3|11|2|12|3|63|9&&2|13|2|6|3|65|9
+/Users/jeff/Documents/workspaces/dme/track_logger_converter/parsers/nmea_parser.py=3
+NmeaRmcExtractor=1
+convert_degrees=9
+parse=13
+rmc_extractor=7
+Fields=4
+extractData=5
+extractor_factory=8
+parsers.nmea_parser=2
+state=11
+__init__=10
+NmeaParser.__init__=12
+NmeaParser=6

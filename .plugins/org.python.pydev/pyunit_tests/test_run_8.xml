@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="1" failures="0" finished="true" name="Test Run: 8" tests="1" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="error" test="CanFrameParserTest.testFrame242" time="">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py", line 19, in testFrame242
+    test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/parsers/can_frame_parser.py", line 22, in extractData
+    clutch_pedal = CanFrameParser.frame_byte(field_data, 0) & 0x08
+TypeError: unsupported operand type(s) for &: 'str' and 'int'
+]]>
+        </stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter can_frame_parser_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

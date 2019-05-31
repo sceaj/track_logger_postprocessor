@@ -1,0 +1,19 @@
+'''
+Created on May 20, 2019
+
+@author: jeff
+'''
+
+class NmeaParser(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, state):
+        '''
+        Constructor
+        '''
+        self.state = state
+        
+    def parse(self, sentence):

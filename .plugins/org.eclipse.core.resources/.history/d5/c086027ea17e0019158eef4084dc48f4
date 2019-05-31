@@ -1,0 +1,54 @@
+'''
+Created on May 24, 2019
+
+@author: jeff
+'''
+import unittest
+from parsers.can_frame_parser import CanFrame242Extractor
+from parsers.can_frame_parser import CanFrame245Extractor
+from parsers.can_frame_parser import CanFrame246Extractor
+from converter.data_state import DataState
+
+
+
+class CanFrameParserTest(unittest.TestCase):
+
+    test_state = DataState()
+        
+    def testFrame242_1(self):
+        test_fields = ["$CNDRV","476.72","242","01","00","00","00","58","00","65","00"]
+        test_extractor = CanFrame242Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        self.assertEqual(0, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Clutch)), 'Clutch Pedal was not parsed correctly.')
+        self.assertEqual(0, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.RPM)), 'Engine RPM was not parsed correctly.')
+        self.assertEqual(0, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.ECU_Throttle)), 'ECU commanded throttle was not parsed correctly.')                 
+        pass
+
+    def testFrame242_2(self):
+        test_fields = ["$CNDRV","476.72","242","09","00","C8","50","58","C3","65","00"]
+        test_extractor = CanFrame242Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        self.assertEqual(8, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Clutch)), 'Clutch Pedal was not parsed correctly.')
+        self.assertEqual(5170, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.RPM)), 'Engine RPM was not parsed correctly.')
+        self.assertEqual(76, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.ECU_Throttle)), 'ECU commanded throttle was not parsed correctly.')                 
+        pass
+
+    def testFrame245(self):
+        test_fields = ["$CNDRV","476.72","245","01","6C","02","00","58","00","65","00"]
+        test_extractor = CanFrame245Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        self.assertEqual(96, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Coolant_Temperature)), 'Coolant temperature was not parsed correctly.')
+        self.assertEqual(2, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Brake)), 'Brake pedal was not parsed correctly.')
+        pass
+
+    def testFrame246(self):
+        test_fields = ["$CNDRV","476.72","246","0B","00","C8","E1","58","C3","65","00"]
+        test_extractor = CanFrame246Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        self.assertEqual(3, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Gear)), 'Gear indicator was not parsed correctly.')
+        self.assertEqual(88, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.ECU_Throttle)), 'ECU commanded throttle was not parsed correctly.')                 
+        pass
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testFrame242']
+    unittest.main()
