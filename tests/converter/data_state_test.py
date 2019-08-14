@@ -19,6 +19,33 @@ class Test(unittest.TestCase):
         self.assertEqual("Oil_Pressure", actual_name, "The field name for Oil Pressure was not looked up correctly.")
         pass
         
+    def test_dirty_marking(self):
+        Test.object_under_test.set_data_item('Time', 321.36)
+        Test.object_under_test.set_data_item('GPS_Date', '15-05-19')
+        Test.object_under_test.set_data_item('GPS_Time', '21:23:48.021')
+        Test.object_under_test.set_data_item('X', 0.14)
+        Test.object_under_test.set_data_item('Time', 321.41)
+        Test.object_under_test.set_data_item('X', 0.10)
+        dirty_fields = Test.object_under_test.get_dirty_fields()
+        expected_dirty = set({'Time','GPS_Date','GPS_Time','X'})
+        self.assertSetEqual(dirty_fields, expected_dirty, 'Expected dirty fields didn''t match the returned actual dirty fields.')
+
+    def test_cleaning_dirty_marking(self):
+        Test.object_under_test.set_data_item('Time', 321.36)
+        Test.object_under_test.set_data_item('GPS_Date', '15-05-19')
+        Test.object_under_test.set_data_item('GPS_Time', '21:23:48.021')
+        Test.object_under_test.set_data_item('X', 0.14)
+        Test.object_under_test.set_data_item('Time', 321.41)
+        Test.object_under_test.set_data_item('X', 0.10)
+        dirty_fields = Test.object_under_test.get_dirty_fields()
+        self.assertTrue('X' in dirty_fields, 'Expected field X to be dirty.')
+        Test.object_under_test.clean_fields(['X', 'GPS_Date', 'GPS_Time'])
+        dirty_fields = Test.object_under_test.get_dirty_fields()
+        self.assertTrue(Test.object_under_test.is_dirty('Time'), 'Expected field Time to be dirty')
+        self.assertFalse(Test.object_under_test.is_dirty('GPS_Date'), 'Expected field GPS_Date to not be dirty')
+        self.assertFalse(Test.object_under_test.is_dirty('GPS_Time'), 'Expected field GPS_Time to not be dirty')
+        self.assertFalse(Test.object_under_test.is_dirty('X'), 'Expected field X to not be dirty')
+
     def test_set_data_item(self):
         Test.object_under_test.set_data_item('RPM', 3787)
         self.assertTrue(Test.object_under_test.get_data_item('RPM') == 3787, 'Expected RPM to have value 3787')
@@ -51,7 +78,6 @@ class Test(unittest.TestCase):
         self.assertTrue('Y' in names)
         self.assertTrue('Z' in names)
         self.assertTrue('KPH' in names)
-        self.assertTrue('Heading' in names)
         self.assertTrue('Lap' in names)
         self.assertTrue('RPM' in names)
         self.assertTrue('Gear' in names)
@@ -64,6 +90,8 @@ class Test(unittest.TestCase):
         self.assertTrue('Oil_Pressure' in names)
         self.assertTrue('Oil_Temperature' in names)
         self.assertTrue('PSM' in names)
+        self.assertTrue('GPS_KPH' in names)
+        self.assertTrue('GPS_Heading' in names)
         pass
 
 if __name__ == "__main__":

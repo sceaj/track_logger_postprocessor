@@ -20,7 +20,7 @@ class NmeaParserTest(unittest.TestCase):
         self.assertAlmostEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Latitude)), 3943.0144216666667, 8)
         self.assertAlmostEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Longitude)), -10456.015831666668, 8)
         self.assertAlmostEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.GPS_KPH)), 79.08040000000001, 8)
-        self.assertAlmostEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Heading)), 203.20000000, 8)
+        self.assertAlmostEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.GPS_Heading)), 203.20000000, 8)
         self.assertEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.GPS_Date)), '2019-05-19')
         self.assertEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.GPS_Time)), '04:03:38.445')                  
         pass
