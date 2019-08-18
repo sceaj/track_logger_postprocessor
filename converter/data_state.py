@@ -13,6 +13,7 @@ class DataState(object):
     
     names = Enum([
             'Time',
+            'DateTime',
             'GPS_Time',
             'GPS_Date',
             'Latitude',
@@ -22,8 +23,6 @@ class DataState(object):
             'Y',
             'Z',
             'KPH',
-            'GPS_KPH',
-            'Heading',
             'Lap',
             'RPM',
             'Gear',
@@ -44,7 +43,11 @@ class DataState(object):
             'PSM',
             'GPS_KPH',
             'GPS_Heading',
-            'Accuracy'
+            'Accuracy',
+            'Sport_Mode',
+            'Pasm_Sport_Mode',
+            'PSM_Disable',
+            'EOL'
     ])
 
     def __init__(self):
@@ -53,6 +56,8 @@ class DataState(object):
         '''
         self.state_time = 0.0
         self.state = dict()
+        self.state['Lap'] = 0
+        self.dirty = set()
     
     @staticmethod
     def get_data_names():
@@ -62,12 +67,31 @@ class DataState(object):
     def get_data_name_at_idx(idx):
         return DataState.names[idx]
 
+    def clean(self):
+        self.dirty.clear()
+        
+    def clean_fields(self, field_names):
+        for name in field_names:
+            if name in self.dirty:
+                self.dirty.remove(name)
+        
+    def get_dirty_fields(self):
+        return frozenset(self.dirty)
+    
+    def is_dirty(self, field_name):
+        return field_name in self.dirty
+        
     def set_data_item(self, name, value):
         if name not in DataState.names:
             raise ValueError("The name [{0}] is not in the defined set of data names: {1}".format(name, DataState.names))
+        if name == 'Time':
+            if value != self.state_time:
+                self.state_time = value
         self.state[name] = value
+        self.dirty.add(name)
         
     def get_data_item(self, name):
         if name not in DataState.names:
             raise ValueError("The name [{0}] is not in the defined set of data names: {1}".format(name, DataState.names))
-        return self.state[name]
+        return self.state.get(name,"")
+    

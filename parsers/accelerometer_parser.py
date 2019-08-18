@@ -12,9 +12,9 @@ class AccelerometerParser(object):
     '''
     Fields = Enum(['Mnemonic', 'Time', 'LongitudinalGs', 'LateralGs', 'VerticalGs'])
 
-    x_zero = 505
-    y_zero = 511
-    z_zero = 510
+    x_zero = 501
+    y_zero = 514
+    z_zero = 523
     
     scale = 100.0
     
@@ -36,7 +36,7 @@ class AccelerometerParser(object):
     def get_adjusted_value(raw_value, zero_value):
         return float(raw_value - zero_value) / AccelerometerParser.scale
             
-    def parser(self, sentence):
+    def parse(self, sentence):
         field_data = sentence.split(',')
         x_raw = AccelerometerParser.get_raw_value(field_data, AccelerometerParser.Fields.LongitudinalGs)
         x_accel = AccelerometerParser.get_adjusted_value(x_raw, AccelerometerParser.x_zero)

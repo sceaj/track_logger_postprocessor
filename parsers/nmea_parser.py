@@ -32,7 +32,7 @@ class NmeaRmcExtractor(object):
             gps_kph = float(field_data[NmeaRmcExtractor.Fields.Speed]) * 1.852
             state.set_data_item(DataState.names[DataState.names.GPS_KPH], gps_kph)
             gps_heading = float(field_data[NmeaRmcExtractor.Fields.Track])
-            state.set_data_item(DataState.names[DataState.names.Heading], gps_heading)
+            state.set_data_item(DataState.names[DataState.names.GPS_Heading], gps_heading)
 
 
 class NmeaParser(object):
@@ -47,11 +47,11 @@ class NmeaParser(object):
         if mnemonic == '$GPRMC':
             return NmeaParser.rmc_extractor
         else:
-            raise ValueError("No known extractor for GPS sentence {}".format(mnemonic))
+            return None
         
     @staticmethod
     def convert_degrees(raw_value):
-        minutes_index = raw_value.find(".")
+        minutes_index = raw_value.find(".") - 2
         degress = float(raw_value[0:minutes_index])
         minutes = float(raw_value[minutes_index:]) / 60.0
         return degress + minutes
@@ -65,6 +65,9 @@ class NmeaParser(object):
     def parse(self, sentence):
         field_data = sentence.split(',')
         extractor = NmeaParser.extractor_factory(field_data[0])
-        extractor.extractData(field_data, self.state)
+        if extractor is not None:
+            extractor.extractData(field_data, self.state)
+        else:
+            print("No extractor has been written for {0}. Skipping...".format(field_data[0]))
 
         
