@@ -1,0 +1,26 @@
+'''
+Created on May 24, 2019
+
+@author: jeff
+'''
+import unittest
+from parsers.can_frame_parser import CanFrameParser.CanFrame242Extractor
+from converter.data_state import DataState
+
+
+
+class CanFrameParserTest(unittest.TestCase):
+
+    test_state = DataState()
+        
+    def testFrame242(self):
+        test_fields = ["$CNDRV","476.72","242","01","00","00","00","58","00","65","00"]
+        test_extractor = CanFrame242Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        
+        pass
+
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testFrame242']
+    unittest.main()

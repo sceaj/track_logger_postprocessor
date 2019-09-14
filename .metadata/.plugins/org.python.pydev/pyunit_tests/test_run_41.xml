@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="1" failures="0" finished="true" name="Test Run: 41" tests="0" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="error" test="can_frame_parser_test" time="0">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Applications/Eclipse Oxygen.app/Contents/Eclipse/plugins/org.python.pydev.core_7.0.3.201811082356/pysrc/_pydev_runfiles/pydev_runfiles.py", line 468, in __get_module_from_str
+    mod = __import__(modname)
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py", line 13, in <module>
+    class CanFrameParserTest(unittest.TestCase):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py", line 16, in CanFrameParserTest
+    test_parser = CanFrameParser()
+TypeError: __init__() takes exactly 2 arguments (1 given)
+ERROR: Module: can_frame_parser_test could not be imported (file: /Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py).
+]]>
+        </stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter can_frame_parser_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

@@ -1,0 +1,13 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=macosx
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:dme78_eeprom,org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter main.py,org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter data_state_test.py,org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter can_frame_parser_test.py (1),org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter can_frame_parser_test.py,org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter nmea_parser_test.py
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:New_configuration/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:New_configuration/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:dme78_eeprom/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:dme78_eeprom/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter\ can_frame_parser_test.py\ (1)/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter\ can_frame_parser_test.py/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter\ data_state_test.py/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:track_logger_converter\ data_state_test.py/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

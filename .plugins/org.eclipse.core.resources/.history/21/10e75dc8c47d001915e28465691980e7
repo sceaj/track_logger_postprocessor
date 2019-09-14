@@ -1,0 +1,45 @@
+'''
+Created on May 20, 2019
+
+@author: jeff
+'''
+from data_state import DataState
+from enum import Enum
+
+class CanFrameParser(object):
+    '''
+    classdocs
+    '''
+    Fields = Enum(['Mnemonic', 'Time', 'CanId', 'Byte0', 'Byte1', 'Byte2', 'Byte3', 'Byte4', 'Byte5', 'Byte6', 'Byte7'])
+
+    def __init__(self, state):
+        '''
+        Constructor
+        '''
+        self.state = state
+        
+    def parse(self, sentence):
+        fields = sentence.split(',')
+        
+class CanFrame0C2Parser(object):
+    
+    def extractData(self, fields, state):
+        steering_angle = (fields[CanFrameParser.Fields.Byte0] + (256 * fields[CanFrameParser.Fields.Byte1])) * 0.04381
+        state.put(DataState.names[DataState.names.Steering_Angle], steering_angle)
+        steering_rate = (fields[CanFrameParser.Fields.Byte2] + (256 * fields[CanFrameParser.Fields.Byte3])) * 0.04381
+        state.put(DataState.names[DataState.names.Steering_Rate], steering_rate)
+        
+class CanFrame14AParser(object):
+    
+    def extractData(self, fields, state):
+        
+class CanFrame242Parser(object):
+    
+    def extractData(self, fields, state):
+        
+    
+class CanFrame245Parser(object):
+    
+class CanFrame246Parser(object):
+    
+class CanFrame

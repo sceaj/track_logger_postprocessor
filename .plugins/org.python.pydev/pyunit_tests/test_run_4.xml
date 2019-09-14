@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="1" failures="1" finished="true" name="Test Run: 4" tests="4" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="ok" test="Test.test_get_data_name_at_index" time="0.00">
+        <stdout/>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="fail" test="Test.test_get_data_names" time="">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py", line 43, in test_get_data_names
+    self.assertTrue('GPS Time' in names)
+AssertionError: False is not true
+]]>
+        </stderr>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="ok" test="Test.test_set_data_item" time="0.00">
+        <stdout/>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py" status="error" test="Test.test_set_data_item_multi" time="">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/converter/data_state_test.py", line 27, in test_set_data_item_multi
+    Test.object_under_test.set_data_item('GPS Date', '15-05-19')
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/converter/data_state.py", line 62, in set_data_item
+    raise ValueError("The name [{0}] is not in the defined set of data names: {1}".format(name, DataState.names))
+ValueError: The name [GPS Date] is not in the defined set of data names: ('Time', 'GPS_Time', 'GPS_Date', 'Longitude', 'Latitude', 'Altitude', 'X', 'Y', 'Z', 'KPH', 'Heading', 'Lap', 'RPM', 'Gear', 'Throttle', 'ECU_Throttle', 'Brake', 'Brake_Pressure', 'Clutch', 'Steering_Angle', 'Steering_Rate', 'Coolant_Temperature', 'Oil_Pressure', 'Oil_Temperature', 'LF_KPH', 'RF_KPH', 'LR_KPH', 'RR_KPH', 'PSM', 'Accuracy')
+]]>
+        </stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter data_state_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

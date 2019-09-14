@@ -1,0 +1,22 @@
+'''
+Created on May 21, 2019
+
+@author: jeff
+'''
+
+from converter.data_state import DataState
+import unittest
+
+
+class Test(unittest.TestCase):
+
+    object_under_test = DataState()
+
+    def test_set_data_item(self):
+        object_under_test.set_
+        pass
+
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()

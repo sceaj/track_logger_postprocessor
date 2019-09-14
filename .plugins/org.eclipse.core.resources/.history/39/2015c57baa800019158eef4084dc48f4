@@ -1,0 +1,40 @@
+'''
+Created on May 20, 2019
+
+@author: jeff
+'''
+from converter.data_state import DataState
+from util.enum import Enum
+
+class NmeaRmcExtractor
+
+    Fields = Enum(['Mnemonic', 'GPS_Time', 'GPS_Status', 'Latitude', 'Latitude_Direction', 'Longitude', 'Longitude_Direction', 'Speed', 'Track', 'GPS_Date', 'Magnetic_Variation', "Checksum"])
+
+    def extractData(self, field_data, state):
+        gps_state = field_data[NmeaRmcExtractor.Fields.GPS_Status]
+        if (gps_state == 'A'):
+            gps_raw_time = field_data[NmeaRmcExtractor.Fields.GPS_Time]
+            gps_time = "{0}:{1}:{2}".format(gps_raw_time[0,2], gps_raw_time[2,4], gps_raw_time[4,6])
+            state.set_data_item(DataState.names[DataState.names.GPS_Time], gps_time)
+            gps_raw_date = field_data[NmeaRmcExtractor.Fields.GPS_Date]
+            gps_date = "20{2!02d}-{1!02d}-{0!02d}".format(gps_raw_date[0,2], gps_raw_date[2,4], gps_raw_date[4,6])
+            state.set_data_item(DataState.names[DataState.names.GPS_Date], gps_date)
+        ecu_throttle = CanFrameParser.frame_byte(field_data, 5) * 100 / 255
+        state.set_data_item(DataState.names[DataState.names.ECU_Throttle], ecu_throttle)
+        print "Clutch: {0}".format(clutch_pedal)
+        print "RPM: {0}".format(engine_rpm)
+        print "ECU_Throttle: {0}".format(ecu_throttle)
+
+class NmeaParser(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, state):
+        '''
+        Constructor
+        '''
+        self.state = state
+        
+    def parse(self, sentence):

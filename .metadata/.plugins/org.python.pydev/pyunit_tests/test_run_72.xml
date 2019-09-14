@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="1" failures="0" finished="true" name="Test Run: 72" tests="1" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/nmea_parser_test.py" status="error" test="NmeaParserTest.test_rmc_1" time="">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/nmea_parser_test.py", line 23, in test_rmc_1
+    self.assertAlmostEqual(self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Heading)), 203.20000000, 8)
+  File "/usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/unittest/case.py", line 870, in assertAlmostEqual
+    diff = abs(first - second)
+TypeError: unsupported operand type(s) for -: 'str' and 'float'
+]]>
+        </stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter nmea_parser_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

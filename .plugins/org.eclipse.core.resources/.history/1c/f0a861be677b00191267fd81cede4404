@@ -1,0 +1,24 @@
+'''
+Created on May 20, 2019
+
+@author: sceaj
+'''
+
+import datetime
+
+class DataState(object):
+    '''
+    classdocs
+    '''
+
+    def state_time = new datetime.timedelta():
+    def state = new dict()
+
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        
+    def set_data_time(self, time):
+        
+    def set_data_item(self, key, value):

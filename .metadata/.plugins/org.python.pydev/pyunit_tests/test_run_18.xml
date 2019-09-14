@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="0" failures="0" finished="true" name="Test Run: 18" tests="2" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame242_1" time="0.00">
+        <stdout>
+            <![CDATA[Clutch: 0
+RPM: 0
+ECU_THROTTLE: 0
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/can_frame_parser_test.py" status="ok" test="CanFrameParserTest.testFrame242_2" time="0.00">
+        <stdout>
+            <![CDATA[Clutch: 8
+RPM: 5170
+ECU_THROTTLE: 76
+]]>
+        </stdout>
+        <stderr/>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter can_frame_parser_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

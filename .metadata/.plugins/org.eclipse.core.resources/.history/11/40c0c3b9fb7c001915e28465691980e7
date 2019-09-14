@@ -1,0 +1,59 @@
+'''
+Created on May 20, 2019
+
+@author: sceaj
+'''
+
+class Enum(tuple): __getattr__ = tuple.index    
+    
+class DataState(object):
+    '''
+    classdocs
+    '''
+    
+    names = Enum([
+            'Time',
+            'GPS Time',
+            'GPS Date',
+            'Longitude',
+            'Latitude',
+            'Altitude',
+            'X',
+            'Y',
+            'Z',
+            'KPH',
+            'Heading',
+            'Lap',
+            'RPM',
+            'Gear',
+            'Throttle',
+            'Brake',
+            'Clutch',
+            'Steering Angle',
+            'Steering Rate',
+            'Coolant Temperature',
+            'Oil Pressure',
+            'Oil Temperature',
+            'PSM',
+            'Accuracy'
+    ])
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        self.state_time = 0.0
+        self.state = dict()
+    
+    def get_data_names(self):
+        return list(DataState.names)
+
+    def set_data_item(self, name, value):
+        if name not in DataState.names:
+            raise ValueError("The name [{0}] is not in the defined set of data names: {1}".format(name, DataState.names))
+        self.state[name] = value
+        
+    def get_data_item(self, name):
+        if name not in DataState.names:
+            raise ValueError("The name [{0}] is not in the defined set of data names: {1}".format(name, DataState.names))
+        return self.state[name]

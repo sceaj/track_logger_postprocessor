@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="1" failures="0" finished="true" name="Test Run: 62" tests="1" total_time="Finished in: 0.00 secs."/>
+    <test location="/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/nmea_parser_test.py" status="error" test="NmeaParserTest.test_rmc_1" time="">
+        <stdout/>
+        <stderr>
+            <![CDATA[Traceback (most recent call last):
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/tests/parsers/nmea_parser_test.py", line 19, in test_rmc_1
+    test_extractor.extractData(test_fields, NmeaParserTest.test_state)
+  File "/Users/jeff/Documents/workspaces/dme/track_logger_converter/parsers/nmea_parser.py", line 20, in extractData
+    gps_date = "20{2!02d}-{1!02d}-{0!02d}".format(gps_raw_date[0:2], gps_raw_date[2:4], gps_raw_date[4:6])
+ValueError: expected ':' after conversion specifier
+]]>
+        </stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento>
+            <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="track_logger_converter nmea_parser_test.py"/>
+]]>
+        </launch_memento>
+    </launch>
+</pydev-testsuite>

@@ -1,0 +1,27 @@
+'''
+Created on May 20, 2019
+
+@author: sceaj
+'''
+
+class Parser(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        
+    def parse(self, sentence):
+        sentence_type = sentence.split(",")[0]
+        
+        
+class ParserFactory:
+    
+    @staticmethod
+    def getParser(sentence_type):
+        def parser
+        if sentence_type == '$GP'

@@ -1,0 +1,68 @@
+'''
+Created on May 20, 2019
+
+@author: jeff
+'''
+from converter.data_state import DataState
+from util.enum import Enum
+
+class NmeaRmcExtractor(object):
+
+    Fields = Enum(['Mnemonic', 'GPS_Time', 'GPS_Status', 'Latitude', 'Latitude_Direction', 'Longitude', 'Longitude_Direction', 'Speed', 'Track', 'GPS_Date', 'Magnetic_Variation', "Checksum"])
+
+    def extractData(self, field_data, state):
+        gps_state = field_data[NmeaRmcExtractor.Fields.GPS_Status]
+        if (gps_state == 'A'):
+            gps_raw_time = field_data[NmeaRmcExtractor.Fields.GPS_Time]
+            gps_time = "{0}:{1}:{2}".format(gps_raw_time[0:2], gps_raw_time[2:4], gps_raw_time[4:6])
+            state.set_data_item(DataState.names[DataState.names.GPS_Time], gps_time)
+            gps_raw_date = field_data[NmeaRmcExtractor.Fields.GPS_Date]
+            gps_date = "20{2!02d}-{1!02d}-{0!02d}".format(gps_raw_date[0:2], gps_raw_date[2:4], gps_raw_date[4:6])
+            state.set_data_item(DataState.names[DataState.names.GPS_Date], gps_date)
+            gps_raw_lat = field_data[NmeaRmcExtractor.Fields.Latitude]
+            gps_lat_direction = field_data[NmeaRmcExtractor.Fields.Latitude_Direction]
+            latitude = "{0},{1}{2}".format(gps_raw_lat[0:2], gps_raw_lat[2:], gps_lat_direction)
+            state.set_data_item(DataState.names[DataState.names.Latitude], latitude)
+            gps_raw_long = field_data[NmeaRmcExtractor.Fields.Longitude]
+            gps_long_direction = field_data[NmeaRmcExtractor.Fields.Longitude_Direction]
+            longitude = "{0},{1}{2}".format(gps_raw_long[0:2], gps_raw_long[2:], gps_long_direction)
+            state.set_data_item(DataState.names[DataState.names.Longitude], longitude)
+            gps_kph = field_data[NmeaRmcExtractor.Fields.Speed] * 1.852
+            state.set_data_item(DataState.names[DataState.names.GPS_KPH], gps_kph)
+            gps_heading = field_data[NmeaRmcExtractor.Fields.Track]
+            state.set_data_time(DataState.names[DataState.names.Heading], gps_heading)
+
+
+class NmeaParser(object):
+    '''
+    classdocs
+    '''
+    
+    rmc_extractor = NmeaRmcExtractor()
+    
+    @staticmethod
+    def extractor_factory(mnemonic):
+        if mnemonic == '$GPRMC':
+            return NmeaParser.rmc_extractor
+        else:
+            raise ValueError("No known extractor for GPS sentence {}".format(mnemonic))
+        
+    @staticmethod
+    def convert_degrees(raw_value):
+        minutes_index = raw_value.find(".")
+        degress = float(raw_value[0:minutes_index])
+        minutes = float(raw_value[minutes_index:])
+        return degress + minutes
+
+    def __init__(self, state):
+        '''
+        Constructor
+        '''
+        self.state = state
+        
+    def parse(self, sentence):
+        field_data = sentence.split(',')
+        extractor = NmeaParser.extractor_factory(field_data[0])
+        extractor.extractData(field_data, self.state)
+
+        

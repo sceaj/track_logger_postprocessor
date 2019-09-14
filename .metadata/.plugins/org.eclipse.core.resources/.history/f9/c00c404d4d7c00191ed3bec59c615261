@@ -1,0 +1,29 @@
+'''
+Created on May 21, 2019
+
+@author: jeff
+'''
+
+from converter.data_state import DataState
+import unittest
+
+
+class Test(unittest.TestCase):
+
+    object_under_test = DataState()
+
+    def test_set_data_item(self):
+        Test.object_under_test.set_data_item('RPM', 3787)
+        self.assertTrue(Test.object_under_test.get_data_item('RPM') == 3787, 'Expected RPM to have value 3787')
+        pass
+
+    def test_get_data_names(self):
+        names = Test.object_under_test.get_data_names()
+        self.assertTrue('Time' in names)
+        self.assertTrue('GPS Time' in names)
+        self.assertTrue('GPS Date in names')
+        pass
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
