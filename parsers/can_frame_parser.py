@@ -21,15 +21,17 @@ class CanFrame0C2Extractor(object):
         if (steering_rate_sign == 0):
             steering_rate *= -1
         state.set_data_item(DataState.names[DataState.names.Steering_Rate], int(steering_rate))
-        print("Steering_Angle: {0}".format(steering_angle))
-        print("Steering_Rate: {0}".format(steering_rate))
+        if CanFrameParser.verbose:
+            print("Steering_Angle: {0}".format(steering_angle))
+            print("Steering_Rate: {0}".format(steering_rate))
                 
 class CanFrame14AExtractor(object):
     
     def extractData(self, field_data, state):
         psm_disable = 1 if (CanFrameParser.frame_byte(field_data, 1) & 0x20) == 0x20 else 0
         state.set_data_item(DataState.names[DataState.names.PSM_Disable], psm_disable)
-        print("PSM_Disable: {0}".format(psm_disable))
+        if CanFrameParser.verbose:
+            print("PSM_Disable: {0}".format(psm_disable))
  
 class CanFrame242Extractor(object):
     
@@ -40,9 +42,10 @@ class CanFrame242Extractor(object):
         state.set_data_item(DataState.names[DataState.names.RPM], engine_rpm)
         ecu_throttle = int(CanFrameParser.frame_byte(field_data, 5) * 100 / 255)
         state.set_data_item(DataState.names[DataState.names.ECU_Throttle], ecu_throttle)
-        print("Clutch: {0}".format(clutch_pedal))
-        print("RPM: {0}".format(engine_rpm))
-        print("ECU_Throttle: {0}".format(ecu_throttle))
+        if CanFrameParser.verbose:
+            print("Clutch: {0}".format(clutch_pedal))
+            print("RPM: {0}".format(engine_rpm))
+            print("ECU_Throttle: {0}".format(ecu_throttle))
 
 class CanFrame245Extractor(object):
     
@@ -51,8 +54,9 @@ class CanFrame245Extractor(object):
         state.set_data_item(DataState.names[DataState.names.Coolant_Temperature], coolant_temp)
         brake_pedal = 1 if (CanFrameParser.frame_byte(field_data, 2) & 0x02) == 0x02 else 0
         state.set_data_item(DataState.names[DataState.names.Brake], brake_pedal)
-        print("Coolant: {0}".format(coolant_temp))
-        print("Brake: {0}".format(brake_pedal))
+        if CanFrameParser.verbose:
+            print("Coolant: {0}".format(coolant_temp))
+            print("Brake: {0}".format(brake_pedal))
     
 class CanFrame246Extractor(object):
     
@@ -61,8 +65,9 @@ class CanFrame246Extractor(object):
         state.set_data_item(DataState.names[DataState.names.Gear], gear_selection)
         throttle_pedal = int(CanFrameParser.frame_byte(field_data, 3) * 100 / 255)
         state.set_data_item(DataState.names[DataState.names.Throttle], throttle_pedal)
-        print("Gear: {0}".format(gear_selection))
-        print("Throttle: {0}".format(throttle_pedal))
+        if CanFrameParser.verbose:
+            print("Gear: {0}".format(gear_selection))
+            print("Throttle: {0}".format(throttle_pedal))
 
 class CanFrame24AExtractor(object):
     
@@ -75,17 +80,19 @@ class CanFrame24AExtractor(object):
         state.set_data_item(DataState.names[DataState.names.LR_KPH], lr_wheel_speed)
         rr_wheel_speed = CanFrameParser.frame_word(field_data, 6) / 100
         state.set_data_item(DataState.names[DataState.names.RR_KPH], rr_wheel_speed)
-        print("Left Front KPH: {0}".format(lf_wheel_speed))
-        print("Right Front KPH: {0}".format(rf_wheel_speed))
-        print("Left Rear KPH: {0}".format(lr_wheel_speed))
-        print("Right Rear KPH: {0}".format(rr_wheel_speed))
+        if CanFrameParser.verbose:
+            print("Left Front KPH: {0}".format(lf_wheel_speed))
+            print("Right Front KPH: {0}".format(rf_wheel_speed))
+            print("Left Rear KPH: {0}".format(lr_wheel_speed))
+            print("Right Rear KPH: {0}".format(rr_wheel_speed))
 
 class CanFrame308Extractor(object):
     
     def extractData(self, field_data, state):
         sport_mode = 1 if (CanFrameParser.frame_byte(field_data, 0) & 0x20) else 0
         state.set_data_item(DataState.names[DataState.names.Sport_Mode], sport_mode)
-        print("Sport Mode: {0}".format(sport_mode))
+        if CanFrameParser.verbose:
+            print("Sport Mode: {0}".format(sport_mode))
 
 class CanFrame441Extractor(object):
     
@@ -94,27 +101,33 @@ class CanFrame441Extractor(object):
         state.set_data_item(DataState.names[DataState.names.Oil_Temperature], oil_temperature)
         oil_pressure = CanFrameParser.frame_byte(field_data, 6) * 25 / 10
         state.set_data_item(DataState.names[DataState.names.Oil_Pressure], oil_pressure)
-        print("Oil Temperature: {0}".format(oil_temperature))
-        print("Oil Pressure: {0}".format(oil_pressure))
+        if CanFrameParser.verbose:
+            print("Oil Temperature: {0}".format(oil_temperature))
+            print("Oil Pressure: {0}".format(oil_pressure))
 
 class CanFrame442Extractor(object):
     
     def extractData(self, field_data, state):
         pasm_sport_mode = 1 if (CanFrameParser.frame_byte(field_data, 0) & 0x11) == 0x11 else 0
         state.set_data_item(DataState.names[DataState.names.Pasm_Sport_Mode], pasm_sport_mode)
-        print("PASM Sport Mode: {0}".format(pasm_sport_mode))
+        if CanFrameParser.verbose:
+            print("PASM Sport Mode: {0}".format(pasm_sport_mode))
 
 class CanFrame44BExtractor(object):
     
     def extractData(self, field_data, state):
         brake_pressure = CanFrameParser.frame_byte(field_data, 0)
         state.set_data_item(DataState.names[DataState.names.Brake_Pressure], brake_pressure)
-        print("Brake Pressure: {0}".format(brake_pressure))
+        if CanFrameParser.verbose:
+            print("Brake Pressure: {0}".format(brake_pressure))
 
 class CanFrameParser(object):
     '''
     classdocs
     '''
+    
+    verbose = False
+    
     Fields = Enum(['Mnemonic', 'Time', 'CanId', 'Byte0', 'Byte1', 'Byte2', 'Byte3', 'Byte4', 'Byte5', 'Byte6', 'Byte7'])
 
     frame_0C2_extractor = CanFrame0C2Extractor()

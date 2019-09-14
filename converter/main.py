@@ -20,19 +20,24 @@ It defines classes_and_methods
 
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
+import io
 import os
+import requests
 import sys
+import urllib
 
 from converter.data_state import DataState
 from converter.parser import Parser
 from converter.formatter import FormatterFactory
-import datetime
 from converter.time_util import TimeUtils
+import datetime
 
 __all__ = []
 __version__ = 0.1
 __date__ = '2019-05-20'
 __updated__ = '2019-05-20'
+
+verbose = 0
 
 DEBUG = 1
 TESTRUN = 0
@@ -48,45 +53,72 @@ class CLIError(Exception):
     def __unicode__(self):
         return self.msg
 
-def process(input_paths, output_path, format, tags, start_date_datum, start_time_datum):
+def process(input_paths, output_url, output_format, tags, output_batch_size, start_date_datum, start_time_datum):
     data = DataState()
     time_util = TimeUtils(start_date_datum, start_time_datum)
     data.set_data_item('DateTime', time_util.calculateTimestamp(None, None, 0.0))
     last_data_time = data.state_time
     parser = Parser(data)
-    formatter = FormatterFactory.getFormatter(format, tags)
-    with open(output_path, "w") as ofile:
-        header_line = formatter.formatHeading(data)
-        if header_line is not None:
+    formatter = FormatterFactory.getFormatter(output_format, tags)
+    ostream = io.StringIO()
+    header_line = formatter.formatHeading(data)
+    if header_line is not None:
+        if verbose > 0:
             print(header_line)
-            ofile.write(header_line)
-            ofile.write("\n")
-        for path in input_paths:
-            print("Processing {0}".format(path))
-            with open(path, "r") as ifile:
-                for data_line in ifile:
-                    input_line = data_line.strip()
+        print(header_line, end='\n', file=ostream)
+    line_count = 0
+    for path in input_paths:
+        print("Processing {0}".format(path))
+        with open(path, "r") as ifile:
+            for data_line in ifile:
+                input_line = data_line.strip()
+                if verbose > 0:
                     print(input_line)
-                    parser.parse(input_line)
-                    output_lines = formatter.formatData(data)
-                    if output_lines is not None:
-                        for output_line in output_lines:
+                parser.parse(input_line)
+                output_lines = formatter.formatData(data)
+                if output_lines is not None:
+                    for output_line in output_lines:
+                        if verbose > 0:
                             print(output_line)
-                            ofile.write(output_line)
-                            ofile.write("\n")
-                    if data.state_time > last_data_time:
-                        last_data_time = data.state_time
-                        data.set_data_item('DateTime', time_util.calculateTimestamp(data.get_data_item('GPS_Date'), data.get_data_item('GPS_Time'), data.state_time))
-                        output_line = formatter.formatTimeIncrement(data)
-                        if output_line is not None:
+                        print(output_line, end='\n', file=ostream)
+                        line_count = line_count + 1
+                if data.state_time > last_data_time:
+                    last_data_time = data.state_time
+                    data.set_data_item('DateTime', time_util.calculateTimestamp(data.get_data_item('GPS_Date'), data.get_data_item('GPS_Time'), data.state_time))
+                    output_line = formatter.formatTimeIncrement(data)
+                    if output_line is not None:
+                        if verbose > 0:
                             print(output_line)
-                            ofile.write(output_line)
-                            ofile.write("\n")
+                        print(output_line, end='\n', file=ostream)
+                        line_count = line_count + 1
+                if line_count >= output_batch_size:
+                    writeBatch(output_url, ostream)
+                    ostream.close()
+                    ostream = io.StringIO()
+                    line_count = 0
         footer_line = formatter.formatFooter(data)
         if footer_line is not None:
-            print(footer_line)
-            ofile.write(footer_line)
-            ofile.write("\n")
+            if verbose > 0:
+                print(footer_line)
+            print(footer_line, end='\n', file=ostream)
+        writeBatch(output_url, ostream)
+        ostream.close()
+
+def writeBatch(output_url, output_buffer):
+    url_components = urllib.parse.urlparse(output_url)
+    if url_components.scheme.startswith('http'):
+        writeBatchToInflux(output_url, output_buffer)
+    else:
+        writeBatchToFile(url_components.path, output_buffer)
+    
+def writeBatchToInflux(output_url, output_buffer):
+    print("URL: {0}".format(output_url))
+    response = requests.post(output_url, data=output_buffer.getvalue(), headers={'Content-Type': 'text/plain', 'Accept':'*/*'})
+    print("Response: {0}".format(str(response)))
+    
+def writeBatchToFile(output_dest, output_buffer):
+    with open(output_dest, "a") as ofile:
+        ofile.write(output_buffer.getvalue())
 
 def buildTags(args):
     tags = dict()
@@ -130,7 +162,7 @@ USAGE
         parser.add_argument('-i', '--vin',         dest='tag_vin',     default='n/a', help='VIN number used to tag data. (output formats that support tagging)')
         parser.add_argument('-n', '--vehicle',     dest='tag_vehicle', default='n/a', help='Vehicle name used to tag data. (output formats that support tagging)')
         parser.add_argument('-m', '--mileage',     dest='tag_mileage', default='0',   help='Mileage used to tag data. (output formats that support tagging)')
-        parser.add_argument('-o', '--output',      dest="output_path", help="Destination path of output file")
+        parser.add_argument('-o', '--output',      dest="output_url", help="URL of destination to which output is sent.")
         parser.add_argument('-t', '--temperature', dest='tag_temp',    help='Ambient temperature used to tag the data. (output formats that support tagging)')
         parser.add_argument('-D', '--start_date',  dest='start_date',  default=None,  help='Date datum (in ISO format: YYYY-MM-DD). If supplied GPS_Date data in log data is ignored.')
         parser.add_argument('-T', '--start_time',  dest='start_time',  default=None,  help='Time datum (in ISO format: HH24:MM:SS.ffffff[Z]) used with Time field to generate Unix timestamps')
@@ -143,7 +175,7 @@ USAGE
 
         input_paths = args.input_paths
         output_format = args.output_format
-        output_path = args.output_path
+        output_url = args.output_url
         verbose = args.verbose
         
         if args.start_date is not None:
@@ -158,14 +190,14 @@ USAGE
 
         print("Input Path(s): {0}".format(input_paths))
         print("Output Format: {0}".format(output_format))
-        print("Output Path(s): {0}".format(output_path))
+        print("Output URL: {0}".format(output_url))
         print("Start Date Datum: {0}".format(start_date_datum))
         print("Start Time Datum: {0}".format(start_time_datum))
         print("Tags: {0}".format(tags))
         if verbose > 0:
             print("Verbose mode on")
 
-        process(input_paths, output_path, output_format, tags, start_date_datum, start_time_datum)
+        process(input_paths, output_url, output_format, tags, 2000, start_date_datum, start_time_datum)
         return 0
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###

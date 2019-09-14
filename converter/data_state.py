@@ -57,6 +57,7 @@ class DataState(object):
         self.state_time = 0.0
         self.state = dict()
         self.state['Lap'] = 0
+        self.state['Altitude'] = 0.0
         self.dirty = set()
     
     @staticmethod

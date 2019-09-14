@@ -62,7 +62,7 @@ USAGE
     if verbose > 0:
         print("Verbose mode on")
 
-    print("Validating %s...".format(input_path))
+    print("Validating {0}...".format(input_path))
     validate(input_path)
     return 0
 

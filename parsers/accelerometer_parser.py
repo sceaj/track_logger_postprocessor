@@ -10,6 +10,7 @@ class AccelerometerParser(object):
     '''
     classdocs
     '''
+    
     Fields = Enum(['Mnemonic', 'Time', 'LongitudinalGs', 'LateralGs', 'VerticalGs'])
 
     x_zero = 501
