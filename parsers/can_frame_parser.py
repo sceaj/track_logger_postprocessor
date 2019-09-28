@@ -9,17 +9,9 @@ from util.enum import Enum
 class CanFrame0C2Extractor(object):
     
     def extractData(self, field_data, state):
-        steering_angle = CanFrameParser.frame_int16(field_data, 0)
-        steering_angle_sign = steering_angle & 0x8000
-        steering_angle &= 0xEFFF
-        if (steering_angle_sign == 0):
-            steering_angle *= -1
-        state.set_data_item(DataState.names[DataState.names.Steering_Angle], int(steering_angle))
-        steering_rate = CanFrameParser.frame_int16(field_data, 2)
-        steering_rate_sign = steering_rate & 0x8000
-        steering_rate &= 0xEFFF
-        if (steering_rate_sign == 0):
-            steering_rate *= -1
+        steering_angle = CanFrameParser.frame_int15(field_data, 0)
+        state.set_data_item(DataState.names[DataState.names.Steering_Angle], steering_angle)
+        steering_rate = CanFrameParser.frame_int15(field_data, 2)
         state.set_data_item(DataState.names[DataState.names.Steering_Rate], int(steering_rate))
         if CanFrameParser.verbose:
             print("Steering_Angle: {0}".format(steering_angle))
@@ -198,15 +190,28 @@ class CanFrameParser(object):
     @staticmethod
     def frame_word(field_data, word_idx):
         if word_idx == 0:
-            return int(field_data[CanFrameParser.Fields.Byte1] + field_data[CanFrameParser.Fields.Byte0], 16)
+            word_str = field_data[CanFrameParser.Fields.Byte1] + field_data[CanFrameParser.Fields.Byte0]
+            return int(word_str, 16)
         elif word_idx == 2:
-            return int(field_data[CanFrameParser.Fields.Byte3] + field_data[CanFrameParser.Fields.Byte2], 16)
+            word_str = field_data[CanFrameParser.Fields.Byte3] + field_data[CanFrameParser.Fields.Byte2]
+            return int(word_str, 16)
         elif word_idx == 4:
-            return int(field_data[CanFrameParser.Fields.Byte5] + field_data[CanFrameParser.Fields.Byte4], 16)
+            word_str = field_data[CanFrameParser.Fields.Byte5] + field_data[CanFrameParser.Fields.Byte4]
+            return int(word_str, 16)
         elif word_idx == 6:
-            return int(field_data[CanFrameParser.Fields.Byte7] + field_data[CanFrameParser.Fields.Byte7], 16)
+            word_str = field_data[CanFrameParser.Fields.Byte7] + field_data[CanFrameParser.Fields.Byte6]
+            return int(word_str, 16)
         else:
             raise ValueError("The word index of a CAN frame must be 0, 2, 4, or 6")
+        
+    @staticmethod
+    def frame_int15(field_data, word_idx):
+        word = CanFrameParser.frame_word(field_data, word_idx)
+        signbit = word & 0x8000
+        value = word & 0x7FFF
+        if signbit > 0:
+            value = value * -1
+        return value
         
     @staticmethod
     def frame_int16(field_data, word_idx):

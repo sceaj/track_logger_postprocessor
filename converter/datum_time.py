@@ -32,20 +32,19 @@ def scan(inpath, verbose):
             input_line = data_line.strip()
             if verbose > 0:
                 print(input_line)
-            if input_line.startswith('$AC') or input_line.startswith('$GPRMC'):
-                parser.parse(input_line)
+            parser.parse(input_line)
+            if data.is_dirty('GPS_Date') and data.is_dirty('GPS_Time'):
                 print("Line {3} - Time: {0}    GPS Timestamp: {1} {2}".format(data.get_data_item('Time'), data.get_data_item('GPS_Date'), data.get_data_item('GPS_Time'), line_count))
-                if data.is_dirty('GPS_Date') and data.is_dirty('GPS_Time'):
-                    data_datetime = datetime.strptime("{0} {1}".format(data.get_data_item('GPS_Date'), data.get_data_item('GPS_Time')), '%Y-%m-%d %H:%M:%S.%f')
-                    data_deltatime = timedelta(0, data.get_data_item('Time'))
-                    calculated_datum_datetime = data_datetime - data_deltatime
-                    if datum_datetime is None:
-                        datum_datetime = calculated_datum_datetime
-                    print("Calculated Datum: {0}".format(calculated_datum_datetime.isoformat()))
-                    datum_delta = calculated_datum_datetime - datum_datetime
-                    print("Calculated Delta: {0}".format(datum_delta.total_seconds()))
-                    accumulated_delta = accumulated_delta + datum_delta.total_seconds()
-                    delta_count = delta_count + 1
+                data_datetime = datetime.strptime("{0} {1}".format(data.get_data_item('GPS_Date'), data.get_data_item('GPS_Time')), '%Y-%m-%d %H:%M:%S.%f')
+                data_deltatime = timedelta(0, data.get_data_item('Time'))
+                calculated_datum_datetime = data_datetime - data_deltatime
+                if datum_datetime is None:
+                    datum_datetime = calculated_datum_datetime
+                print("Calculated Datum: {0}".format(calculated_datum_datetime.isoformat()))
+                datum_delta = calculated_datum_datetime - datum_datetime
+                print("Calculated Delta: {0}".format(datum_delta.total_seconds()))
+                accumulated_delta = accumulated_delta + datum_delta.total_seconds()
+                delta_count = delta_count + 1
         average_delta = accumulated_delta / delta_count
         print("Average Delta: {0}".format(average_delta))
         datum_datetime = datum_datetime + timedelta(0, average_delta)

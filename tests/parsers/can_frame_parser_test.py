@@ -4,6 +4,7 @@ Created on May 24, 2019
 @author: jeff
 '''
 import unittest
+from parsers.can_frame_parser import CanFrame0C2Extractor
 from parsers.can_frame_parser import CanFrame242Extractor, CanFrame245Extractor, CanFrame246Extractor, CanFrame24AExtractor
 from parsers.can_frame_parser import CanFrame441Extractor, CanFrame44BExtractor, CanFrameParser
 from converter.data_state import DataState
@@ -15,6 +16,23 @@ class CanFrameParserTest(unittest.TestCase):
     test_state = DataState()
     test_parser = CanFrameParser(test_state)
         
+    def testFrame0C2_1(self):
+        CanFrameParser.verbose = True
+        test_fields = ["$CNDRV","476.72","0C2","CB","10","15","06","00","00","00","00"]
+        test_extractor = CanFrame0C2Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        self.assertEqual(4299, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Steering_Angle)), 'Steering Angle was not parsed correctly.')
+        self.assertEqual(1557, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Steering_Rate)), 'Steering Rate was not parsed correctly.')
+        
+    def testFrame0C2_2(self):
+        CanFrameParser.verbose = True
+        test_fields = ["$CNDRV","476.72","0C2","C8","90","15","86","00","00","00","00"]
+        test_extractor = CanFrame0C2Extractor()
+        test_extractor.extractData(test_fields, CanFrameParserTest.test_state)
+        self.assertEqual(-4296, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Steering_Angle)), 'Steering Angle was not parsed correctly.')
+        self.assertEqual(-1557, self.test_state.get_data_item(DataState.get_data_name_at_idx(DataState.names.Steering_Rate)), 'Steering Rate was not parsed correctly.')
+        
+            
     def testFrame242_1(self):
         test_fields = ["$CNDRV","476.72","242","01","00","00","00","58","00","65","00"]
         test_extractor = CanFrame242Extractor()
